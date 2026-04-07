@@ -54,6 +54,7 @@ function generate() {
     }
 }
 
+console.log(MAD_LIB);
 /**
  * This function is called by generate any time the user requests
  * generation and validation passes. Generate the `madlib-result` div
@@ -64,9 +65,36 @@ function generateLib() {
     resultDiv.innerHTML = "";
 
     let pBuilder = document.createElement("p"); 
-    pBuilder.innerText = "I should start building the madlib!";
+    pBuilder.innerText = "";
 
-    resultDiv.appendChild(pBuilder);
+    let currentParagraphString = "";
+    for(entry of MAD_LIB.text ) {
+        let output = document.createElement("p");
+        switch(entry.segmentType) {
+            case 'static':
+                currentParagraphString += entry.text;
+                // pBuilder.innerText += entry.text;
+                break;
+            case 'fillable':
+                itemElement = document.querySelector("#"+entry.id+"-input");
+                // pBuilder.innerText += itemElement.value;
+                currentParagraphString += itemElement.value;
+                break
+            case 'newline':
+                console.log(output);
+                output.innerText = currentParagraphString;
+                resultDiv.appendChild(output);
+                currentParagraphString = "";
+                break;
+        }
+
+    }
+
+
+
+    console.log(MAD_LIB);
+
+
 }
 
 /**
@@ -98,14 +126,46 @@ function validate() {
         // console.log(document.querySelector("#"+currInputId).value);
         switch(currLib.type) {
             case "word":
-                console.log("Is a word");
-                console.log("Matches via regex: " + /[A-Z]{1}[a-z]+/.test(currValue) );
+                console.log(currValue, " = Word: " + /^[A-Za-z]+$/.test(currValue) );
+                if(!/^[A-Za-z]+$/.test(currValue)) {
+                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without spaces or special characters."
+                    return false;
+                }
+                else {
+                        document.querySelector("#"+currErrorTextId).innerHTML = ""
+                }
                 break;
             case "adjective":
+                console.log(currValue, " = Adjective: " + /^[A-Za-z]+[y]{1}$/.test(currValue) );
+                if(!/^[A-Za-z]+[y]{1}$/.test(currValue)) {
+                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without special characters, ending with a y."
+                    return false;
+                }
+                else {
+                    document.querySelector("#"+currErrorTextId).innerHTML = ""
+
+                }
                 break;
             case "quote":
+                console.log(currValue, " = Quote: " + /(([']{1}.+[']{1})|(["]{1}.+["]{1}))/.test(currValue) );
+                if(!/(([']{1}.+[']{1})|(["]{1}.+["]{1}))/.test(currValue)) {
+                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without special characters, starting with a capital letter."
+                    return false;
+                }
+                else {
+                    document.querySelector("#"+currErrorTextId).innerHTML = ""
+                }
                 break;
             case "properNoun":
+                // console.log("");
+                console.log(currValue, " = Proper Noun: " + /^[A-Z]{1}[A-Za-z]+$/.test(currValue) );
+                if(!/^[A-Z]{1}[A-Za-z]+$/.test(currValue)) {
+                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without special characters, starting with a capital letter."
+                    return false;
+                }
+                else {
+                    document.querySelector("#"+currErrorTextId).innerHTML = ""
+                }
                 break;
             default:
                 break;
