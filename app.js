@@ -62,7 +62,7 @@ console.log(MAD_LIB);
  */
 function generateLib() {
     const resultDiv = document.getElementById("madlib-result");
-    resultDiv.innerHTML = "";
+    resultDiv.innerText = "";
 
     let pBuilder = document.createElement("p"); 
     pBuilder.innerText = "";
@@ -89,12 +89,7 @@ function generateLib() {
         }
 
     }
-
-
-
-    console.log(MAD_LIB);
-
-
+    // console.log(MAD_LIB);
 }
 
 /**
@@ -126,51 +121,47 @@ function validate() {
         // console.log(document.querySelector("#"+currInputId).value);
         switch(currLib.type) {
             case "word":
-                console.log(currValue, " = Word: " + /^[A-Za-z]+$/.test(currValue) );
+                // console.log(currValue, " = Word: " + /^[A-Za-z]+$/.test(currValue) );
                 if(!/^[A-Za-z]+$/.test(currValue)) {
-                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without spaces or special characters."
-                    return false;
+                    document.querySelector("#"+currErrorTextId).innerText = "Please type 1 or more letters, without spaces or special characters."
+                    if(isValid) isValid = false;
                 }
                 else {
-                        document.querySelector("#"+currErrorTextId).innerHTML = ""
+                        document.querySelector("#"+currErrorTextId).innerText = ""
                 }
                 break;
             case "adjective":
-                console.log(currValue, " = Adjective: " + /^[A-Za-z]+[y]{1}$/.test(currValue) );
+                // console.log(currValue, " = Adjective: " + /^[A-Za-z]+[y]{1}$/.test(currValue) );
                 if(!/^[A-Za-z]+[y]{1}$/.test(currValue)) {
-                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without special characters, ending with a y."
-                    return false;
+                    document.querySelector("#"+currErrorTextId).innerText = "Please type 1 or more letters, without special characters, ending with a y."
+                    if(isValid) isValid = false;
                 }
                 else {
-                    document.querySelector("#"+currErrorTextId).innerHTML = ""
-
+                    document.querySelector("#"+currErrorTextId).innerText = ""
                 }
                 break;
             case "quote":
-                console.log(currValue, " = Quote: " + /(([']{1}.+[']{1})|(["]{1}.+["]{1}))/.test(currValue) );
+                // console.log(currValue, " = Quote: " + /(([']{1}.+[']{1})|(["]{1}.+["]{1}))/.test(currValue) );
                 if(!/(([']{1}.+[']{1})|(["]{1}.+["]{1}))/.test(currValue)) {
-                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without special characters, starting with a capital letter."
-                    return false;
+                    document.querySelector("#"+currErrorTextId).innerText = "Please type 1 or more characters between single or double quotes."
+                    if(isValid) isValid = false;
                 }
                 else {
-                    document.querySelector("#"+currErrorTextId).innerHTML = ""
+                    document.querySelector("#"+currErrorTextId).innerText = ""
                 }
                 break;
             case "properNoun":
                 // console.log("");
-                console.log(currValue, " = Proper Noun: " + /^[A-Z]{1}[A-Za-z]+$/.test(currValue) );
+                // console.log(currValue, " = Proper Noun: " + /^[A-Z]{1}[A-Za-z]+$/.test(currValue) );
                 if(!/^[A-Z]{1}[A-Za-z]+$/.test(currValue)) {
-                    document.querySelector("#"+currErrorTextId).innerHTML = "Please type 1 or more letters, without special characters, starting with a capital letter."
-                    return false;
+                    document.querySelector("#"+currErrorTextId).innerText = "Please type 1 or more letters, without special characters, starting with a capital letter."
+                    if(isValid) isValid = false;
                 }
                 else {
-                    document.querySelector("#"+currErrorTextId).innerHTML = ""
+                    document.querySelector("#"+currErrorTextId).innerText = ""
                 }
                 break;
-            default:
-                break;
         }
-        
     }
 
     return isValid;
