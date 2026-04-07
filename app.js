@@ -92,7 +92,25 @@ function validate() {
         let currLib = MAD_LIB.fillers[i];
         let currInputId = currLib.id + "-input";
         let currErrorTextId = currLib.id + "-error-text";
-        console.log(currLib, currInputId, currErrorTextId);        
+        // console.log(currLib, currInputId, currErrorTextId);
+        
+        let currValue = document.querySelector("#"+currInputId).value;
+        // console.log(document.querySelector("#"+currInputId).value);
+        switch(currLib.type) {
+            case "word":
+                console.log("Is a word");
+                console.log("Matches via regex: " + /[A-Z]{1}[a-z]+/.test(currValue) );
+                break;
+            case "adjective":
+                break;
+            case "quote":
+                break;
+            case "properNoun":
+                break;
+            default:
+                break;
+        }
+        
     }
 
     return isValid;
